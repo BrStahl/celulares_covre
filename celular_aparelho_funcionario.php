@@ -145,10 +145,14 @@ if ($acesso <> "permitido") {
                   <tr>
                     <td width="11" class="no-border left altura">&nbsp;</td>
                     <td width="370" class="no-border left altura">
-                      <font size="-1"><b>Nome Responsável: <span class="input-group date form_datetime col-md-2">
-                            <input type='hidden' class='form-control txt-center altura-campo' aria-describedby='basic-addon1' name='id'
-                              id='id' size='9' maxlength='10' value='<?php print $id ?>'>
-                          </span></b></font>
+                      <font size="-1"><b>Nome Responsável: </b></font>
+                      <input type='button' class='btn-xs btn-warning' value='Trocar Responsável' id='trocar_resp_label' name='trocar_resp_label' style='display:none; margin-left:5px;' onClick="javascript:trocar_responsavel()">
+                      <span class="input-group date form_datetime col-md-2">
+                        <input type='hidden' class='form-control txt-center altura-campo' aria-describedby='basic-addon1' name='id'
+                          id='id' size='9' maxlength='10' value='<?php print $id ?>'>
+                        <input type='hidden' name='id_antigo' id='id_antigo' value=''>
+                        <input type='hidden' name='data_fim_antigo' id='data_fim_antigo' value=''>
+                      </span>
                     </td>
                     <td width="161" class="no-border left altura">
                       <font size="-1"><b>Nº Celular: </b></font>
@@ -293,6 +297,9 @@ if ($acesso <> "permitido") {
                       <div align="center">
                         <input type='button' class='btn-sm btn-primary' value='Gravar' id='gravar' name='gravar'
                           onClick="javascript:grava_registro_aparelho_funcionario('<?php print $dia_ini ?>','<?php print $dia_fim ?>')">
+                        <br><br>
+                        <input type='button' class='btn-sm btn-warning' value='Trocar Responsável' id='trocar_resp' name='trocar_resp' style='display:none;'
+                          onClick="javascript:trocar_responsavel()">
                       </div>
                     </td>
                     <td class="no-border left altura">&nbsp;</td>

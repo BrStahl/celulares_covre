@@ -321,6 +321,8 @@ function grava_registro_aparelho_funcionario(dia_ini, dia_fim){
           $('#myModal_alert_sucess').modal('show');
 
           document.form1.id.value					= '';
+          if (document.form1.id_antigo) document.form1.id_antigo.value = '';
+          if (document.form1.data_fim_antigo) document.form1.data_fim_antigo.value = '';
           document.form1.responsavel.value		= '';
           document.form1.responsavel.readOnly 	= false;
           document.form1.pessoa_id.value			= '';
@@ -334,6 +336,9 @@ function grava_registro_aparelho_funcionario(dia_ini, dia_fim){
           document.form1.data_fim.value			= '';
           document.form1.cod_ccusto.value			= '';
           document.form1.observacao.value			= '';
+
+          $('#trocar_resp').hide();
+          $('#trocar_resp_label').hide();
 
           exibe_celular();
         }
@@ -1131,6 +1136,8 @@ function busca_celular(id){
       var dados = msg.split("|");
 
       document.form1.id.value				= dados[1];
+      if (document.form1.id_antigo) document.form1.id_antigo.value = '';
+      if (document.form1.data_fim_antigo) document.form1.data_fim_antigo.value = '';
       document.form1.pessoa_id.value		= dados[2];
       document.form1.corp_pessoa_id.value		= dados[11];
       document.form1.responsavel.value	= dados[6];
@@ -1142,10 +1149,51 @@ function busca_celular(id){
       $("#aparelho_id").html("<option value='"+dados[9]+"'>"+dados[10]+"</option>");
 
       document.form1.responsavel.readOnly = true;
+
+      $('#trocar_resp').show();
+      $('#trocar_resp_label').show();
     }
   });
 }
 
+}
+
+function trocar_responsavel(){
+  var id = document.getElementById('id') ? document.getElementById('id').value : '';
+  var data_fim = document.getElementById('data_fim') ? document.getElementById('data_fim').value : '';
+
+  if (id == '') {
+    $('#msg').html('Selecione um registro cadastrado para trocar o responsável.');
+    $('#myModal_alert').modal('show');
+    return;
+  }
+
+  if (data_fim == '') {
+    $('#msg').html('Favor preencher a Data Fim para encerrar a responsabilidade do responsável atual.');
+    $('#myModal_alert').modal('show');
+    document.getElementById('data_fim').focus();
+    return;
+  }
+
+  if (document.getElementById('id_antigo')) document.getElementById('id_antigo').value = id;
+  if (document.getElementById('data_fim_antigo')) document.getElementById('data_fim_antigo').value = data_fim;
+
+  document.getElementById('id').value = '';
+  document.getElementById('responsavel').value = '';
+  document.getElementById('pessoa_id').value = '';
+  document.getElementById('corp_pessoa_id').value = '';
+  document.getElementById('responsavel').readOnly = false;
+
+  document.getElementById('data_ini').value = data_fim;
+  document.getElementById('data_fim').value = '';
+
+  $('#trocar_resp').hide();
+  $('#trocar_resp_label').hide();
+
+  $('#msg_success').html('Responsabilidade anterior encerrada em ' + data_fim + '. Informe o novo responsável e clique em Gravar.');
+  $('#myModal_alert_sucess').modal('show');
+
+  document.getElementById('responsavel').focus();
 }
 
 /*SOMENTE NUMERO*/
